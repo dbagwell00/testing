@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: docker:17.06.0-ce-git
         environment:
-          IMAGE_NAME: "testing"
+          IMAGE_NAME: "testing-bind"
 
     steps:
       - checkout
