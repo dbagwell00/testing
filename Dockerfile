@@ -11,9 +11,9 @@ ENV BIND_USER=bind \
     WEBMIN_VERSION=1.8 \
     DATA_DIR=/data
 
-COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg
+# COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg
 
-COPY --from=add-apt-repositories /etc/apt/sources.list /etc/apt/sources.list
+# COPY --from=add-apt-repositories /etc/apt/sources.list /etc/apt/sources.list
 
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && apt-get update \
