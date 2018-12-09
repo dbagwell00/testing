@@ -1,31 +1,32 @@
-#
-# Nginx Dockerfile
-#
-# https://github.com/dockerfile/nginx
-#
+FROM ubuntu:bionic-20180526 AS add-apt-repositories
 
-# Pull base image.
-FROM ubuntu
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg
 
-# Install Nginx.
-RUN \
-  apt-get install -y --no-install-recommends software-properties-common && \
-  add-apt-repository -y ppa:nginx/stable && \
-  apt-get update && \
-  apt-get install -y nginx && \
-  rm -rf /var/lib/apt/lists/* && \
-  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
-  chown -R www-data:www-data /var/lib/nginx
+FROM ubuntu:bionic-20180526
 
-# Define mountable directories.
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
 
-# Define working directory.
-WORKDIR /etc/nginx
+ENV BIND_USER=bind \
+    BIND_VERSION=9.11.3 \
+    WEBMIN_VERSION=1.8 \
+    DATA_DIR=/data
 
-# Define default command.
-CMD ["nginx"]
+# COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg
 
-# Expose ports.
-EXPOSE 80
-EXPOSE 443
+# COPY --from=add-apt-repositories /etc/apt/sources.list /etc/apt/sources.list
+
+RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
+ && apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      bind9=1:${BIND_VERSION}* bind9-host=1:${BIND_VERSION}* dnsutils \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /sbin/entrypoint.sh
+
+RUN chmod 755 /sbin/entrypoint.sh
+
+EXPOSE 53/udp 53/tcp
+
+ENTRYPOINT ["/sbin/entrypoint.sh"]
+
+CMD ["/usr/sbin/named"]
