@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: docker:17.06.0-ce-git
         environment:
-          IMAGE_NAME: "dbagwell00/testing"
+          IMAGE_NAME: "testing"
 
     steps:
       - checkout
@@ -59,6 +59,13 @@ jobs:
           key: cache-{{ .Branch }}-{{ epoch }}
           paths:
             - /cache/layers.tar
+
+      - run:
+          name: Build and push Docker image
+          command: |
+            docker build -t dbagwell00/$IMAGE_NAME:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push dbagwell00/$IMAGE_NAME:$TAG
 
 workflows:
   version: 2
