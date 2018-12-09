@@ -19,6 +19,8 @@ jobs:
           command: |
             docker version
             docker info
+            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+
 
       - restore_cache:
           keys:
