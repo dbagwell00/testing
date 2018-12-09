@@ -66,7 +66,7 @@ jobs:
           command: |
             export TAG=0.1.${CIRCLE_BUILD_NUM}
             docker build -t dbagwell00/$IMAGE_NAME:$TAG .
-            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            echo $DOCKER_PWD | docker login --password-stdin -u $DOCKER_LOGIN
             docker push dbagwell00/$IMAGE_NAME:$TAG
 
 workflows:
