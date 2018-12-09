@@ -1,7 +1,7 @@
 FROM ubuntu:bionic-20180526 AS add-apt-repositories
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg
 
 FROM ubuntu:bionic-20180526
 
