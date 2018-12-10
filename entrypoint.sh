@@ -54,9 +54,6 @@ fi
 
 # default behaviour is to launch named
 if [[ -z ${1} ]]; then
-    set_root_passwd
-  fi
-
   echo "Starting named..."
   exec $(which named) -u ${BIND_USER} -g ${EXTRA_ARGS}
 else
