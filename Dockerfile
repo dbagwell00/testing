@@ -8,7 +8,6 @@ FROM ubuntu:bionic-20180526
 
 ENV BIND_USER=bind \
     BIND_VERSION=9.11.3 \
-    WEBMIN_VERSION=1.8 \
     DATA_DIR=/data
 
 # COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg

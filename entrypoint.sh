@@ -2,10 +2,8 @@
 set -e
 
 ROOT_PASSWORD=${ROOT_PASSWORD:-password}
-WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
 
 BIND_DATA_DIR=${DATA_DIR}/bind
-WEBMIN_DATA_DIR=${DATA_DIR}/webmin
 
 create_bind_data_dir() {
   mkdir -p ${BIND_DATA_DIR}
@@ -56,7 +54,6 @@ fi
 
 # default behaviour is to launch named
 if [[ -z ${1} ]]; then
-  if [ "${WEBMIN_ENABLED}" == "true" ]; then
     set_root_passwd
   fi
 
