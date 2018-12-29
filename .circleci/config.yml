@@ -6,8 +6,6 @@ jobs:
       - image: docker:17.06.0-ce-git
         environment:
           IMAGE_NAME: "testing"
-          GIT_COMMIT_DESC: git log --format=oneline -n 1 $CIRCLE_SHA1
-
 
 
     steps:
@@ -51,7 +49,7 @@ jobs:
       - run:
           name: Testing image
           command: |
-            $GIT_COMMIT_DESC
+            git log --format=oneline -n 1 $CIRCLE_SHA1
             docker run --rm --net testnet $IMAGE_NAME host www.google.com bind-server
 
       - run:
