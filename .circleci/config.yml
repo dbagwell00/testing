@@ -49,7 +49,6 @@ jobs:
       - run:
           name: Testing image
           command: |
-            git log --format=oneline -n 1 $CIRCLE_SHA1
             docker run --rm --net testnet $IMAGE_NAME host www.google.com bind-server
 
       - run:
