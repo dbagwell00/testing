@@ -72,6 +72,7 @@ jobs:
             export TAG=0.1.${CIRCLE_BUILD_NUM}
             docker build -t dbagwell00/$IMAGE_NAME:$TAG .
             docker push dbagwell00/$IMAGE_NAME:$TAG
+            docker push dbagwell00/$IMAGE_NAME:lateset
 
 workflows:
   version: 2
